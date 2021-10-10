@@ -18,6 +18,9 @@ export const ProductSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
   currencyIsoCode: {
     type: String,
     required: true,

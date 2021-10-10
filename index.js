@@ -13,3 +13,29 @@ app.use(cors());
 
 // Connect static files
 app.use("/public", express.static(process.cwd() + "/public"));
+
+// Root route
+app.route("/").get((req, res) => {
+  res.sendFile(process.cwd() + "/views/index.html");
+});
+
+// Shop Route
+import shopRoute from "./routes/shop.js";
+app.use("/shop", shopRoute);
+
+// Connect backend to mongodb
+const CONNECTION_URL = process.env.CONNECTION_URL;
+const PORT = process.env.PORT || 5000;
+mongoose
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
+
+mongoose.set("useFindAndModify", false);
