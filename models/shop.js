@@ -1,7 +1,11 @@
-import mongoose from "mongoose";
-import { ItemSchema } from "./item";
-import { ProductSchema } from "./product";
-import { TransactionSchema } from "./transaction";
+import mongoose, { Schema } from "mongoose";
+import {
+  MODEL_ITEM,
+  MODEL_PRODUCT,
+  MODEL_SHOP,
+  MODEL_TRANSACTION,
+  MODEL_USER,
+} from "../constants/Constants";
 
 const stringOption = {
   type: String,
@@ -10,33 +14,64 @@ const stringOption = {
   maxLength: 32,
 };
 
-const ShopSchema = mongoose.Schema({
-  shopName: {
-    ...stringOption,
-    required: true,
-  },
-
+export const ShopSchema = mongoose.Schema({
   owner: {
+    type: Schema.Types.ObjectId,
+    ref: MODEL_USER,
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+
+  name: {
     ...stringOption,
+    required: true,
+    unique: true,
+  },
+
+  imageUrl: {
+    type: String,
+  },
+
+  currency: {
+    type: String,
     required: true,
   },
 
-  username: {
-    ...stringOption,
-    required: true,
+  money: {
+    type: Number,
+    default: 0,
   },
 
-  password: {
-    ...stringOption,
-    required: true,
-  },
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: MODEL_PRODUCT,
+    },
+  ],
 
-  finance: {},
-  products: [ProductSchema],
-  supplies: [ItemSchema],
-  equipment: [ItemSchema],
-  transactionHistory: [TransactionSchema],
+  supplies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: MODEL_ITEM,
+    },
+  ],
+
+  equipment: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: MODEL_ITEM,
+    },
+  ],
+
+  transactions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: MODEL_TRANSACTION,
+    },
+  ],
 });
 
-const Shop = mongoose.model("Shop", ShopSchema);
-export default Shop;
+export const Shop = mongoose.model(MODEL_SHOP, ShopSchema);

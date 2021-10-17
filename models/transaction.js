@@ -1,16 +1,9 @@
-import mongoose from "mongoose";
-import { ItemSchema } from "./item";
-
-const TransactionItemSchema = mongooseSchema({
-  item: {
-    type: ItemSchema,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
+import mongoose, { Schema } from "mongoose";
+import {
+  MODEL_ITEM,
+  MODEL_PRODUCT,
+  MODEL_TRANSACTION,
+} from "../constants/Constants";
 
 export const TransactionSchema = mongoose.Schema({
   type: {
@@ -19,7 +12,29 @@ export const TransactionSchema = mongoose.Schema({
     required: true,
   },
 
-  items: [TransactionItemSchema],
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+
+  items: [
+    {
+      item: {
+        type: Schema.Types.ObjectId,
+        ref: MODEL_ITEM,
+      },
+
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: MODEL_PRODUCT,
+      },
+
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
 });
 
-export const Transaction = mongoose.model("Transaction", TransactionSchema);
+export const Transaction = mongoose.model(MODEL_TRANSACTION, TransactionSchema);

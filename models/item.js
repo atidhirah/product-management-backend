@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MODEL_ITEM } from "../constants/Constants";
 
 export const ItemSchema = mongoose.Schema({
   type: {
@@ -10,6 +11,9 @@ export const ItemSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
   measurmentUnit: {
     type: String,
     required: true,
@@ -18,7 +22,7 @@ export const ItemSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  currencyIsoCode: {
+  currency: {
     type: String,
     required: true,
   },
@@ -28,4 +32,4 @@ export const ItemSchema = mongoose.Schema({
   },
 });
 
-export const Item = mongoose.model("Supply", ItemSchema);
+export const Item = mongoose.model(MODEL_ITEM, ItemSchema);
