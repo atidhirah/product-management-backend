@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import { MODEL_SHOP, MODEL_USER } from "../constants/Constants";
-import { ShopSchema } from "./shop";
 
 const stringOption = {
   type: String,
@@ -15,7 +14,7 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
 
-  username: {
+  email: {
     ...stringOption,
     required: true,
     unique: true,

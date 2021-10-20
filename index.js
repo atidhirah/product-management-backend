@@ -19,9 +19,9 @@ app.route("/").get((req, res) => {
   res.sendFile(process.cwd() + "/views/index.html");
 });
 
-// Shop Route
-import shopRoute from "./routes/shop.js";
-app.use("/shop", shopRoute);
+// User Route
+import userRoute from "./routes/user.js";
+app.use("/user", userRoute);
 
 // Connect backend to mongodb
 const CONNECTION_URL = process.env.CONNECTION_URL;
