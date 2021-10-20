@@ -1,27 +1,21 @@
-import mongoose, { Schema } from "mongoose";
-import { MODEL_SHOP, MODEL_USER } from "../constants/Constants";
+import mongoose from "mongoose";
+import { MODEL_SHOP, MODEL_USER } from "../constants/Constants.js";
 
-const stringOption = {
-  type: String,
-  minLength: 8,
-  maxLength: 32,
-  trim: true,
-};
-
+const { Schema } = mongoose;
 const UserSchema = mongoose.Schema({
   name: {
-    ...stringOption,
+    type: String,
     required: true,
   },
 
   email: {
-    ...stringOption,
+    type: String,
     required: true,
     unique: true,
   },
 
   password: {
-    ...stringOption,
+    type: String,
     required: true,
   },
 

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MODEL_ITEM } from "../constants/Constants";
+import { MODEL_ITEM } from "../constants/Constants.js";
 
 export const ItemSchema = mongoose.Schema({
   type: {

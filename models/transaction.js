@@ -1,10 +1,11 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import {
   MODEL_ITEM,
   MODEL_PRODUCT,
   MODEL_TRANSACTION,
-} from "../constants/Constants";
+} from "../constants/Constants.js";
 
+const { Schema } = mongoose;
 export const TransactionSchema = mongoose.Schema({
   type: {
     type: String,

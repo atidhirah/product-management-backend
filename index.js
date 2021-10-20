@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import userRoute from "./routes/user.js";
 
 dotenv.config();
 const app = express();
@@ -20,7 +21,6 @@ app.route("/").get((req, res) => {
 });
 
 // User Route
-import userRoute from "./routes/user.js";
 app.use("/user", userRoute);
 
 // Connect backend to mongodb
@@ -37,5 +37,3 @@ mongoose
   .catch((error) => {
     console.log(error.message);
   });
-
-mongoose.set("useFindAndModify", false);

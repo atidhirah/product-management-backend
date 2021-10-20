@@ -1,12 +1,13 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import {
   MODEL_ITEM,
   MODEL_PRODUCT,
   MODEL_SHOP,
   MODEL_TRANSACTION,
   MODEL_USER,
-} from "../constants/Constants";
+} from "../constants/Constants.js";
 
+const { Schema } = mongoose;
 const stringOption = {
   type: String,
   trim: true,

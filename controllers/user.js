@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-import User from "../models/user";
+import User from "../models/user.js";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -40,8 +39,8 @@ export const register = async (req, res) => {
   try {
     // Check if email is already in database
     const existingUser = await User.findOne({ email });
-    if (!existingUser)
-      return res.status(404).json({ message: "User doesn't exist" });
+    if (existingUser)
+      return res.status(404).json({ message: "Email already taken" });
 
     // Check if password match with confirmPassword
     if (password !== confirmPassword)

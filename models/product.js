@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
-import { MODEL_ITEM, MODEL_PRODUCT } from "../constants/Constants";
+import mongoose from "mongoose";
+import { MODEL_ITEM, MODEL_PRODUCT } from "../constants/Constants.js";
 
+const { Schema } = mongoose;
 export const ProductSchema = mongoose.Schema({
   name: {
     type: String,
