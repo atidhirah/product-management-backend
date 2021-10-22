@@ -1,5 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import {
+  EMAIL_EXIST,
+  EMAIL_NOT_FOUND,
+  SERVER_ERROR,
+  WRONG_PASSWORD,
+} from "../constants/Constants.js";
 import User from "../models/user.js";
 
 export const login = async (req, res) => {
@@ -8,16 +14,14 @@ export const login = async (req, res) => {
   try {
     // Check if email is already in database
     const existingUser = await User.findOne({ email });
-    if (!existingUser)
-      return res.status(404).json({ message: "User doesn't exist" });
+    if (!existingUser) return res.json({ error: EMAIL_NOT_FOUND });
 
     // Check if password is correct
     const isPasswordCorrect = await bcrypt.compare(
       password,
       existingUser.password
     );
-    if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Invalid credentials." });
+    if (!isPasswordCorrect) return res.json({ error: WRONG_PASSWORD });
 
     // Create token
     const token = jwt.sign(
@@ -27,9 +31,9 @@ export const login = async (req, res) => {
     );
 
     // Return user data and token
-    res.status(200).json({ result: existingUser, token: token });
+    res.json({ result: existingUser, token: token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong." });
+    res.json({ error: SERVER_ERROR });
   }
 };
 
@@ -39,12 +43,11 @@ export const register = async (req, res) => {
   try {
     // Check if email is already in database
     const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(404).json({ message: "Email already taken" });
+    if (existingUser) return res.json({ error: EMAIL_EXIST });
 
     // Check if password match with confirmPassword
     if (password !== confirmPassword)
-      return res.status(400).json({ message: "Password doesn't match." });
+      return res.json({ error: WRONG_PASSWORD });
 
     // Create new User
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -59,8 +62,8 @@ export const register = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ result, token });
+    res.json({ result, token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong." });
+    res.json({ error: SERVER_ERROR });
   }
 };
