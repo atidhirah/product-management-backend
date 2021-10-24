@@ -26,7 +26,7 @@ export const ShopSchema = mongoose.Schema({
     default: Date.now(),
   },
 
-  name: {
+  shopName: {
     ...stringOption,
     required: true,
     unique: true,
@@ -38,7 +38,6 @@ export const ShopSchema = mongoose.Schema({
 
   currency: {
     type: String,
-    required: true,
   },
 
   money: {
@@ -75,4 +74,5 @@ export const ShopSchema = mongoose.Schema({
   ],
 });
 
-export const Shop = mongoose.model(MODEL_SHOP, ShopSchema);
+const Shop = mongoose.model(MODEL_SHOP, ShopSchema);
+export default Shop;

@@ -3,7 +3,7 @@ import { MODEL_SHOP, MODEL_USER } from "../constants/Constants.js";
 
 const { Schema } = mongoose;
 const UserSchema = mongoose.Schema({
-  name: {
+  fullname: {
     type: String,
     required: true,
   },
@@ -19,12 +19,10 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
 
-  shops: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: MODEL_SHOP,
-    },
-  ],
+  shop: {
+    type: Schema.Types.ObjectId,
+    ref: MODEL_SHOP,
+  },
 });
 
 const User = mongoose.model(MODEL_USER, UserSchema);

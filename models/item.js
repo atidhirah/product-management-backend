@@ -31,5 +31,5 @@ export const ItemSchema = mongoose.Schema({
     required: true,
   },
 });
-
-export const Item = mongoose.model(MODEL_ITEM, ItemSchema);
+const Item = mongoose.model(MODEL_ITEM, ItemSchema);
+export default Item;
