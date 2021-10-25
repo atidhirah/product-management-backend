@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import userRoute from "./routes/user.js";
+import shopRoute from "./routes/shop.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,9 @@ app.route("/").get((req, res) => {
 
 // User Route
 app.use("/user", userRoute);
+
+// Shop Route
+app.use("/shop", shopRoute);
 
 // Connect backend to mongodb
 const CONNECTION_URL = process.env.CONNECTION_URL;

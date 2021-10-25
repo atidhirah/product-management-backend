@@ -59,7 +59,7 @@ export const ShopSchema = mongoose.Schema({
     },
   ],
 
-  equipment: [
+  equipments: [
     {
       type: Schema.Types.ObjectId,
       ref: MODEL_ITEM,

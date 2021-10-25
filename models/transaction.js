@@ -9,13 +9,17 @@ const { Schema } = mongoose;
 export const TransactionSchema = mongoose.Schema({
   type: {
     type: String,
-    enum: ["SELL", "BUY"],
+    enum: ["ADD", "SUBTRACT"],
     required: true,
   },
 
   date: {
     type: Date,
     default: Date.now(),
+  },
+
+  note: {
+    type: String,
   },
 
   items: [
