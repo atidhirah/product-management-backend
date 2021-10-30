@@ -12,7 +12,7 @@ export const updateShopComponent = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(_id))
       return res.json({ error: "Shop Id doesn't exist" });
 
-    const currentShop = await Shop.findById(_id);
+    let currentShop = await Shop.findById(_id);
     if (!shop) return res.json({ error: "Shop doesn't exist" });
 
     switch (type) {
@@ -34,6 +34,7 @@ export const updateShopComponent = async (req, res) => {
         currentShop.products.push(newTransaction._id);
         break;
       default:
+        currentShop = { ...currentShop, ...data };
         break;
     }
 
