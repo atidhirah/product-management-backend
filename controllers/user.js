@@ -51,7 +51,15 @@ export const login = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { fullname, email, password, confirmPassword, shop } = req.body;
+  const {
+    fullname,
+    email,
+    password,
+    confirmPassword,
+    shopName,
+    currency,
+    money,
+  } = req.body;
 
   try {
     // Check if email is already in database
@@ -59,7 +67,7 @@ export const register = async (req, res) => {
     if (existingUser) return res.json({ error: EMAIL_EXIST });
 
     // Check if shopName is already in database
-    const existingShopName = await Shop.findOne({ shop });
+    const existingShopName = await Shop.findOne({ shopName });
     if (existingShopName) return res.json({ error: SHOP_EXIST });
 
     // Check if password match with confirmPassword
@@ -68,7 +76,9 @@ export const register = async (req, res) => {
 
     // Create new Shop
     const newShop = await Shop.create({
-      shopName: shop,
+      shopName,
+      currency,
+      money,
     });
 
     // Create new User
