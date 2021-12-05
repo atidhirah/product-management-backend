@@ -10,8 +10,22 @@ import {
 import User from "../models/user.js";
 import Shop from "../models/shop.js";
 
+export const checkEmailExist = async (req, res) => {
+  const { email } = req.body;
+  console.log(email, req.body);
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.json({ error: EMAIL_EXIST });
+
+    res.json({ message: EMAIL_NOT_FOUND });
+  } catch (error) {
+    res.json({ error: SERVER_ERROR });
+  }
+};
+
 export const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   try {
     // Check if email is already in database
