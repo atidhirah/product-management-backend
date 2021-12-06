@@ -12,14 +12,25 @@ import Shop from "../models/shop.js";
 
 export const checkEmailExist = async (req, res) => {
   const { email } = req.body;
-  console.log(email, req.body);
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.json({ error: EMAIL_EXIST });
 
-    res.json({ message: EMAIL_NOT_FOUND });
+    res.json({ message: "This email is available." });
   } catch (error) {
     res.json({ error: SERVER_ERROR });
+  }
+};
+
+export const checkShopExist = async (req, res) => {
+  const { shopName } = req.body;
+  try {
+    const existingShopName = await Shop.findOne({ shopName });
+    if (existingShopName) return res.json({ error: SHOP_EXIST });
+
+    res.json({ message: "This shop name is available." });
+  } catch (error) {
+    res.json({ error: error.message });
   }
 };
 
@@ -66,7 +77,8 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   const {
-    fullname,
+    firstName,
+    lastName,
     email,
     password,
     confirmPassword,
@@ -74,6 +86,8 @@ export const register = async (req, res) => {
     currency,
     money,
   } = req.body;
+
+  console.log(req.body);
 
   try {
     // Check if email is already in database
@@ -98,7 +112,7 @@ export const register = async (req, res) => {
     // Create new User
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = await User.create({
-      fullname,
+      fullname: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
       shop: newShop._id,
